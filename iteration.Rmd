@@ -7,6 +7,9 @@ output: html_document
 ```{r}
 library(tidyverse)
 library(rvest)
+library(readxl)
+library(p8105.datasets)
+
 ```
 
 ```{r}
@@ -122,5 +125,49 @@ sim_mean_sd(n_obs = 4000, mu = 12, sigma = 3)
 sim_mean_sd(50, 12, 3) # positional matching
 
 ```
+
+## Fix things that bother me
+
+this bothered me:
+
+```{r}
+source("source/asdf.R")
+
+fellowship_df = 
+  read_excel("data/LotR_Words.xlsx", range = "B2:D6") |> 
+  mutate(movie = "fellowship")
+
+two_tower_df =
+  read_excel("data/LotR_Words.xlsx", range = "F3:H6") |> 
+  mutate(movie = "two_towers")
+
+return_df =
+  read_excel("data/LotR_Words.xlsx", range = "J3:L6") |> 
+  mutate(movie = "return_of_king")
+```
+
+Learning Assessment: Try to write a function that can be used to abstract the data loading and cleaning process. Use this function to recreate the tidied LoTR dataset.
+
+```{r}
+fellowship_df =
+  lotr_import(cell_range = "B3:D6", movie_title = "fellowship")
+
+two_tower_df =
+  lotr_import(cell_range = "F3:H6", movie_title = "two_towers")
+
+return_df =
+  lotr_import(cell_range = "J3:L6", movie_title = "return_of_king")
+```
+
+And now its fixed!
+
+```{r}
+url = "https://www.samhsa.gov/data/sites/default/files/NSDUHsaeShortTermCHG2015/NSDUHsaeShortTermCHG2015.htm"
+drug_use_html = read_html(url)
+
+marj_df =
+  nsduh_process(html = drug_use_html, table_num = 1)
+```
+
 
 
