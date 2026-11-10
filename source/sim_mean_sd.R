@@ -9,7 +9,7 @@
 #' @returns dataframe with mean and sd
 #' @export
 #'
-sim_mean_sd = function(n_obs, mu, sigma) {
+sim_mean_sd = function(n_obs, mu = 12, sigma = 3) {
   sim_df =
     tibble(
       x = rnorm(n = n_obs, mean = mu, sd = sigma)
